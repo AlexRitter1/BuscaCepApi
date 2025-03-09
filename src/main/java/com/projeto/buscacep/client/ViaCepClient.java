@@ -1,24 +1,27 @@
 package com.projeto.buscacep.client;
 
 import com.projeto.buscacep.domain.entities.Cep;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Component
-@AllArgsConstructor
-public class WebClient {
+public class ViaCepClient {
 
-    private final org.springframework.web.reactive.function.client.WebClient webClient;
+    private final WebClient webClient = null;
 
-    public Mono<Cep> findCharacterById(Long id) {
+    public ViaCepClient() {
+    }
+
+    public Mono<Cep> findEnderecoByCep(String cep) {
 
         var CepMono = webClient
                 .get()
-                .uri("/json/".concat(id.toString()))
+                .uri("/24900435/json".concat(cep))
                 .accept(APPLICATION_JSON)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError,
